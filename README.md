@@ -4,4 +4,11 @@ sakam so loti sen , bija daudz kas javeido ,bet mes to izdarijam + tas ir musu s
 
 
 <b> Musu robbery code priekš skolas servera <b>
-Author-Levi and Griier
+
+
+
+
+
+
+
+   Author-Levi and Griier
