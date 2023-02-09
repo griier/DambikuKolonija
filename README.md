@@ -1,5 +1,5 @@
 # Dambiku Kolonija
-210 daambiki
+310 daambiki
 sakam so loti sen , bija daudz kas javeido ,bet mes to izdarijam + tas ir musu skolas projekta darbs :D
 
 
