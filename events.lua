@@ -318,5 +318,5 @@ AddEventHandler('pacificBankRobbery:client:randomPedAnim', function(pedNumber)
     if(dict ~= nil)then
         RemoveAnimDict(dict)
     end
-
+        
 end)
