@@ -1,25 +1,25 @@
-RegisterServerEvent('pacificBankRobbery:server:randomKeyGen') --Used to prevent spawning items and mouney.
+RegisterServerEvent('pacificBankRobbery:server:randomKeyGen') --Izmantots lai apstādinātu itemu un naudas uzspawnošanu
 AddEventHandler('pacificBankRobbery:server:randomKeyGen', function(source)
     TriggerClientEvent('pacificBankRobbery:client:randomKeyGen', source, randomKeyGen)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:AlarmState') --Used to prevent spawning items and mouney.
+RegisterServerEvent('pacificBankRobbery:server:AlarmState') --Izmantot lai apstādinātu itemu un naudas uzspawnošanu
 AddEventHandler('pacificBankRobbery:server:AlarmState', function(source)
     TriggerClientEvent('pacificBankRobbery:client:AlarmState', source, alarmState)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:policeCheck') --Used to prevent spawning items and mouney.
+RegisterServerEvent('pacificBankRobbery:server:policeCheck') --Izmantot lai apstādinātu itemu un naudas uzspawnošanu
 AddEventHandler('pacificBankRobbery:server:policeCheck', function(source)
     TriggerClientEvent('pacificBankRobbery:client:policeCheck', source, policeCheck)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:globalAlarmState') --Used to prevent spawning items and mouney.
+RegisterServerEvent('pacificBankRobbery:server:globalAlarmState') --Izmantot lai apstādinātu itemu un naudas uzspawnošanu
 AddEventHandler('pacificBankRobbery:server:globalAlarmState', function(source)
     alarmState = false
     TriggerClientEvent('pacificBankRobbery:client:AlarmState', -1, alarmState)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:PedsUpdate')--Updates client with the current peds and state.
+RegisterServerEvent('pacificBankRobbery:server:PedsUpdate')--Izmantot lai apstādinātu itemu un naudas uzspawnošanu
 AddEventHandler('pacificBankRobbery:server:PedsUpdate', function(source)
     while checker do
         checker = false
@@ -150,7 +150,7 @@ AddEventHandler('pacificBankRobbery:server:stealableOpen', function(source, type
             end
 
                 print(randomAmount)
-                --Give your money here This is for the register. The code for the randomiser is this: math.random(Config.Shops[store].registerMoney[1], Config.Shops[store].registerMoney[2])
+                
         else
             DropPlayer(source, 'Cheating')  
         end
@@ -250,12 +250,12 @@ AddEventHandler('pacificBankRobbery:server:pedDead', function(type, number)
 end)
 
 RegisterServerEvent('pacificBankRobbery:server:fightBack') 
-AddEventHandler('pacificBankRobbery:server:fightBack', function(ped) --Used for the fightback when the robbery starts in the pacific bank.
+AddEventHandler('pacificBankRobbery:server:fightBack', function(ped) --Izmantot priekš cīņas kad banka tiek apzagta
     TriggerClientEvent('pacificBankRobbery:client:fightBack', -1, ped)
 end)
 
 RegisterServerEvent('pacificBankRobbery:server:pedsRun') 
-AddEventHandler('pacificBankRobbery:server:pedsRun', function(ped) --Used for the fightback when the robbery starts in the pacific bank.
+AddEventHandler('pacificBankRobbery:server:pedsRun', function(ped) --Izmantot priekš cīņas kad banka tiek apzagta.
 
     local pedRun = {}
 

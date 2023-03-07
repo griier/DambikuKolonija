@@ -254,18 +254,18 @@ Citizen.CreateThread(function()
 
 end)
 
-function CheckCops() --Checks the current cops online.
+function CheckCops() --Pārbauda pašreizējos policistu kas spēlē
     if(Config.UseCopJob)then
-        local cops = 10 --Sets current cops to 0 to do the check.
-            --add police check here!!!
+        local cops = 10 
+            
         print("add police check here!!!")
 
-        if(cops >= Config.PacificBank.copsNeeded)then --Checks if there are enough cops online.
+        if(cops >= Config.PacificBank.copsNeeded)then --pārliecinās vai spēlē pietiekoši daudzums policistu
             return true
         else
             return false
         end
     else
-        return true --Returns true if you don't need a cop job. Feel free to do whatever the fuck you want here.
+        return true 
     end
 end
