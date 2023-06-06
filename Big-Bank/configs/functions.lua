@@ -1,21 +1,21 @@
-function round(number, decimals) 
+function round(number, decimals) --function that rounds the number to the given decimals
     local power = 10^decimals
     return math.floor(number * power) / power
 end
 
-function randomFloat(lower, greater) 
+function randomFloat(lower, greater) --function that returns a random float between the given numbers
     return lower + math.random()  * (greater - lower);
 end
 
 
-loadDict = function(dict)
+loadDict = function(dict) --loads the animation dictionary
     RequestAnimDict(dict)
     while not HasAnimDictLoaded(dict) do
         Wait(10)
     end
 end
 
-function DrawText3D(x,y,z, text) --Just a simple generic 3d text function.
+function DrawText3D(x,y,z, text) --function that draws text on the given coordinates
     globalWait = 10
     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
     local p = GetGameplayCamCoords()
@@ -37,7 +37,7 @@ function DrawText3D(x,y,z, text) --Just a simple generic 3d text function.
       end
 end
 
-function takeAnim() --This function is used to do the take animation when cracking the register or safebox.
+function takeAnim() --function that plays the animation when taking the money
     local ped = GetPlayerPed(-1)
     while (not HasAnimDictLoaded("amb@prop_human_bum_bin@idle_b")) do
         RequestAnimDict("amb@prop_human_bum_bin@idle_b")
@@ -59,7 +59,7 @@ function takeAnim() --This function is used to do the take animation when cracki
     RemoveAnimDict("amb@prop_human_bum_bin@idle_b")
 end
 
-function LockpickAnim() --This function is used to do the lockpicking animation while cracking the register.
+function LockpickAnim() --function that plays the lockpick animation
     loadDict("veh@break_in@0h@p_m_one@")
     Citizen.CreateThread(function()
         while lockpicking and not registering do
@@ -72,7 +72,7 @@ function LockpickAnim() --This function is used to do the lockpicking animation 
     end)
 end
 
-function _CreatePed(hash, coords, heading) --This function is used to spawn the ped.
+function _CreatePed(hash, coords, heading) --function that creates a ped
     RequestModel(hash)
     while not HasModelLoaded(hash) do
         Wait(5)
@@ -94,7 +94,7 @@ function _CreatePed(hash, coords, heading) --This function is used to spawn the 
     return ped
 end
 
-function CreateSafe()
+function CreateSafe() --function that creates the safes
 	RequestModel(`prop_ld_int_safe_01`)
 	
     while not HasModelLoaded(`prop_ld_int_safe_01`) do
@@ -111,7 +111,7 @@ function CreateSafe()
     FreezeEntityPosition(safe2,true)
 end
 
-function CreateCash()
+function CreateCash()--Function that creates the cash
     for i = 1, #Config.PacificBank.cash do
         if not Config.PacificBank.cash[i].stolen then
             RequestModel(`hei_prop_hei_cash_trolly_01`)
@@ -147,7 +147,7 @@ function CreateCash()
     end
 end
 
-function getRotation(input)
+function getRotation(input) --function that converts degrees to radians
 	return 360/(10*input)
 end
 
@@ -227,7 +227,7 @@ function lasersToggler(state)
     laser4.setActive(state)
 end
 
-function meltDoor(id)
+function meltDoor(id) --function to melt the door
 
     SetCurrentPedWeapon(globalPlayerPed, `WEAPON_UNARMED`, true)
     
@@ -264,7 +264,7 @@ function meltDoor(id)
 
     Citizen.Wait(200)
 
-    local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(globalPlayerPedId)))
+    local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(globalPlayerPedId))) --animacijas rotācija
 
     local scene = NetworkCreateSynchronisedScene(Config.PacificBank.doors[id].anim.x, Config.PacificBank.doors[id].anim.y, Config.PacificBank.doors[id].anim.z, rotx, roty, rotz + Config.PacificBank.doors[id].anim.extra, 2, false, false, 1065353216, 0, 1.3)
 
@@ -307,7 +307,7 @@ function meltDoor(id)
     TriggerServerEvent("pacificBankRobbery:server:breakDoor", id)
 end
 
-function plantBomb()
+function plantBomb() --function to plant the bomb
 
     SetCurrentPedWeapon(globalPlayerPed, `WEAPON_UNARMED`, true)
     
@@ -338,7 +338,7 @@ function plantBomb()
 
     Citizen.Wait(200)
 
-    local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(globalPlayerPedId)))
+    local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(globalPlayerPedId))) --local player rotation
 
     local scene = NetworkCreateSynchronisedScene(Config.PacificBank.vaultDoor.bombLocation.x, Config.PacificBank.vaultDoor.bombLocation.y, Config.PacificBank.vaultDoor.bombLocation.z, rotx, roty, rotz, 2, false, false, 1065353216, 0, 1.3)
 
@@ -374,7 +374,7 @@ function plantBomb()
     TriggerServerEvent("pacificBankRobbery:server:vaultOpener", "bomb")
 end
 
-function hackPanel()
+function hackPanel()--function to hack the panel
 
     SetCurrentPedWeapon(globalPlayerPed, `WEAPON_UNARMED`, true)
 
@@ -452,7 +452,7 @@ function hackPanel()
 
     local timer = 0
 
-        while(timer <= 15000 and not IsPedDeadOrDying(globalPlayerPed))do
+        while(timer <= 15000 and not IsPedDeadOrDying(globalPlayerPed))do --3D Tekssti prieks hacka
 
 
             DrawText3D(globalPlayerCoords.x, globalPlayerCoords.y, globalPlayerCoords.z+0.10, "[X] Cancel")
@@ -466,7 +466,7 @@ function hackPanel()
             Citizen.Wait(5)
         end
 
-    exports['ps-ui']:Thermite(function(success)
+    exports['ps-ui']:Thermite(function(success) --exports and if success then statement that checks if the hack was successful
         if success then
 
             Citizen.Wait(500)
@@ -492,12 +492,12 @@ function hackPanel()
             DeleteObject(card)
             FreezeEntityPosition(globalPlayerPed, false)
             SetPedComponentVariation(globalPlayerPed, 5, 45, 0, 0)
-            print("You failed me you fuckhead")
+            print("You failed")
         end
     end, 10, 5, 3) -- Time, Gridsize (5, 6, 7, 8, 9, 10), IncorrectBlocks
 end
 
-function breakLocker(id)
+function breakLocker(id) --function that breaks the locker
     if(not Config.PacificBank.lockers[id].opened or not Config.PacificBank.lockers[id].busy)then
 
         SetCurrentPedWeapon(globalPlayerPed, `WEAPON_UNARMED`, true)
@@ -548,7 +548,7 @@ function breakLocker(id)
     end
 end
 
-function modeler(model, pedNumber)
+function modeler(model, pedNumber) --function that creates the model for the locker
     if(model ~= nil)then
         Citizen.Wait(1000)
         RequestModel(model)
@@ -561,7 +561,7 @@ function modeler(model, pedNumber)
     end
 end
 
-function OnMHackingDone(success, timeremaining) 
+function OnMHackingDone(success, timeremaining) --function that checks if the hack was successful
     if success then
         TriggerEvent('mhacking:hide')
         hacking = false
@@ -570,7 +570,7 @@ function OnMHackingDone(success, timeremaining)
 	end
 end
 
-function stealCash(i)
+function stealCash(i) --function that steals the cash
 
     TriggerServerEvent("pacificBankRobbery:server:busyState", "cash", i, true)
 
@@ -611,3 +611,7 @@ function stealCash(i)
     Citizen.Wait(250)
     TriggerServerEvent("pacificBankRobbery:server:busyState", "cash", i, false)
 end
+
+--1.first function that is called when the player is in the bank
+--2.after all checks are done, it calls the function that starts the robbery
+--3.after the robbery is done, it calls the function that ends the robbery

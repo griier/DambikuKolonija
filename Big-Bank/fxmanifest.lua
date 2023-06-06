@@ -27,7 +27,6 @@ server_scripts {
     'configs/config.lua',
     'server/pacificBankRobbery.lua',
     'server/events.lua',
-    'server/versionCheck.lua',
     'configs/functions.lua',
 }
 

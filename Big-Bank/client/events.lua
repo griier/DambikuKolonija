@@ -1,70 +1,71 @@
-RegisterNetEvent('pacificBankRobbery:client:randomKeyGen') --To izmanto servera puses aizsardzībai, lai spēlētāji nevarētu uzreiz velreiz apzagt
-AddEventHandler('pacificBankRobbery:client:randomKeyGen', function(key)
-    serverKeyGen = key
-end)
+--write explanation here for what this file does
+RegisterNetEvent('pacificBankRobbery:client:randomKeyGen') --starts the random key generation
+AddEventHandler('pacificBankRobbery:client:randomKeyGen', function(key) --adds the random key generation
+    serverKeyGen = key --sets the server key generation to the key
+end) --ends the random key generation
 
-RegisterNetEvent('pacificBankRobbery:client:animator')
-AddEventHandler('pacificBankRobbery:client:animator', function(type, dict, anim, speech)
-    local ped = nil
-    if(type == "reception")then
-        ped = ReceptionPed
-    end
+RegisterNetEvent('pacificBankRobbery:client:animator') --starts the animator
+AddEventHandler('pacificBankRobbery:client:animator', function(type, dict, anim, speech) --adds the animator
+    local ped = nil --sets the ped to nil
+    if(type == "reception")then --if the type is reception
+        ped = ReceptionPed --sets the ped to the reception ped
+    end --ends the if statement
 
-    if(ped ~= nil)then
-        if(DoesEntityExist(ped) and inPoly)then
-            ClearPedTasks(ped)
-            Citizen.Wait(300)
-            loadDict(dict)
-            TaskPlayAnim(ped, dict, anim, 3.0, -1, -1, 50, 0, false, false, false)
-            RemoveAnimDict(dict)
+    if(ped ~= nil)then --if the ped is not nil
+        if(DoesEntityExist(ped) and inPoly)then --if the entity exists and is in the poly
+            ClearPedTasks(ped) --clears the ped tasks
+            Citizen.Wait(300) --waits 300 seconds
+            loadDict(dict) --loads the dict
+            TaskPlayAnim(ped, dict, anim, 3.0, -1, -1, 50, 0, false, false, false) --plays the animation
+            RemoveAnimDict(dict) --removes the animation dict
 
-            if(speech)then
-                Citizen.Wait(500)
-                PlayAmbientSpeech1(ped, "GUN_BEG", "SPEECH_PARAMS_FORCE_NORMAL_CLEAR")
-            end
+            if(speech)then --if speech is true
+                Citizen.Wait(500) --waits 500 seconds
+                PlayAmbientSpeech1(ped, "GUN_BEG", "SPEECH_PARAMS_FORCE_NORMAL_CLEAR") --plays the ambient speech
+            end --ends the if statement
 
-        end
-    end
-end)
+        end --ends the if statement
+    end --ends the if statement
+end) --ends the animator
 
-RegisterNetEvent('pacificBankRobbery:client:PedsUpdate') --Atgriež galvenos ped datus.
-AddEventHandler('pacificBankRobbery:client:PedsUpdate', function(mainReceptionEmployee, mainSecurityGuardWeapon, mainReceptionEmployeeState, mainSecurityGuard, mainSecurityGuardState, secondSecurityGuardWeapon, secondSecurityGuard, secondSecurityGuardState,  randomPeds)
-    Config.PacificBank.mainReceptionEmployee = mainReceptionEmployee
-    Config.PacificBank.mainReceptionEmployeeState = mainReceptionEmployeeState
-    Config.PacificBank.mainSecurityGuard = mainSecurityGuard
-    Config.PacificBank.mainSecurityGuardWeapon = mainSecurityGuardWeapon
-    Config.PacificBank.mainSecurityGuardState = mainSecurityGuardState
+RegisterNetEvent('pacificBankRobbery:client:PedsUpdate') --starts the ped update
+AddEventHandler('pacificBankRobbery:client:PedsUpdate', function(mainReceptionEmployee, mainSecurityGuardWeapon, mainReceptionEmployeeState, mainSecurityGuard, mainSecurityGuardState, secondSecurityGuardWeapon, secondSecurityGuard, secondSecurityGuardState,  randomPeds) --adds the ped update
+    Config.PacificBank.mainReceptionEmployee = mainReceptionEmployee --sets the main reception employee to the main reception employee
+    Config.PacificBank.mainReceptionEmployeeState = mainReceptionEmployeeState --sets the main reception employee state to the main reception employee state
+    Config.PacificBank.mainSecurityGuard = mainSecurityGuard --sets the main security guard to the main security guard
+    Config.PacificBank.mainSecurityGuardWeapon = mainSecurityGuardWeapon --sets the main security guard weapon to the main security guard weapon
+    Config.PacificBank.mainSecurityGuardState = mainSecurityGuardState --sets the main security guard state to the main security guard state
     
-    Config.PacificBank.secondSecurityGuard = secondSecurityGuard
+    Config.PacificBank.secondSecurityGuard = secondSecurityGuard --sets the second security guard to the second security guard
     Config.PacificBank.secondSecurityGuardWeapon = secondSecurityGuardWeapon
-    Config.PacificBank.secondSecurityGuardState = secondSecurityGuardState
+    Config.PacificBank.secondSecurityGuardState = secondSecurityGuardState --sets the second security guard state to the second security guard state
 
-    for i = 1, #Config.PacificBank.randomPeds do
-        Config.PacificBank.randomPeds[i].ped = randomPeds[i].type 
-        Config.PacificBank.randomPeds[i].animation = randomPeds[i].animation
-        Config.PacificBank.randomPeds[i].state = randomPeds[i].state
+    for i = 1, #Config.PacificBank.randomPeds do --for loop for the random peds
+        Config.PacificBank.randomPeds[i].ped = randomPeds[i].type --sets the random peds to the random peds
+        Config.PacificBank.randomPeds[i].animation = randomPeds[i].animation --sets the random peds animation to the random peds animation
+        Config.PacificBank.randomPeds[i].state = randomPeds[i].state  --sets the random peds state to the random peds state
     end
 
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:robbed') --Izmanto ja banka ir jau apzagta
-AddEventHandler('pacificBankRobbery:client:robbed', function(key)
-    Config.PacificBank.robbed = key
-end)
+RegisterNetEvent('pacificBankRobbery:client:robbed') --starts the robbed event
+AddEventHandler('pacificBankRobbery:client:robbed', function(key) --adds the robbed event
+    Config.PacificBank.robbed = key --sets the robbed to the key
+end) --ends the robbed event
 
-RegisterNetEvent('pacificBankRobbery:client:stealableUpdate') --Izmanto ja banka ir jau apzagta
-AddEventHandler('pacificBankRobbery:client:stealableUpdate', function(safes, lockers, cash)
-    for v=1, #Config.PacificBank.safes do --Iziet cauri seifiem klienta konfigurācijā un atjaunot to 'opened' un 'busy' atribūtus, lai tie atbilstu servera sūtītajiem atribūtiem.
-        Config.PacificBank.safes[v].opened = safes[v].opened
-        Config.PacificBank.safes[v].busy = safes[v].busy
+RegisterNetEvent('pacificBankRobbery:client:stealableUpdate') -- starts the stealable update
+AddEventHandler('pacificBankRobbery:client:stealableUpdate', function(safes, lockers, cash) --adds the stealable update
+    for v=1, #Config.PacificBank.safes do --config for the safes
+        Config.PacificBank.safes[v].opened = safes[v].opened --sets the safes to the safes
+        Config.PacificBank.safes[v].busy = safes[v].busy --sets the safes to the safes
     end
 
-    for v=1, #Config.PacificBank.lockers do --Iziet cauri skapīšiem klienta konfigurācijā un atjaunot to 'opened' un 'busy' atribūtus, lai tie atbilstu servera sūtītajiem atribūtiem.
+    for v=1, #Config.PacificBank.lockers do --
         Config.PacificBank.lockers[v].opened = lockers[v].opened
         Config.PacificBank.lockers[v].busy = lockers[v].busy
     end
 
-    for v=1, #Config.PacificBank.cash do --Iziet cauri naudai klienta konfigurācijā un atjaunot to 'stolen' un 'busy' atribūtus, lai tie atbilstu servera sūtītajiem atribūtiem.
+    for v=1, #Config.PacificBank.cash do --
         Config.PacificBank.cash[v].stolen = cash[v].stolen
         Config.PacificBank.cash[v].busy = cash[v].busy
     end
@@ -845,4 +846,3 @@ AddEventHandler('pacificBankRobbery:client:teleport', function()
     end
     
 end)
-

@@ -1,14 +1,11 @@
 Config = {}
 
 --IMPORTANT STUFF--
-Config.Language = 'en' 
-Config.Framework = "VRP" 
-
 Config.PedsResetTime = 1000 * 60 * 30 --ShopKeeper reset timer.
 Config.UseBlips = true --Set to true if you want to have store blips.
 Config.UseCopJob = true --Set to true for the interact sound alarm ogg.
 Config.UseLasers = true
-Config.UseItems = false --Enable this to enable items checking. YOU NEED 3 ITEMS. "advancedlockpick", "thermite", "oxycutter".
+Config.UseItems = false --Priekš itemiem kad ieliksm
 --IMPORTANT STUFF--
 
 
@@ -37,31 +34,31 @@ Config.UseItems = false --Enable this to enable items checking. YOU NEED 3 ITEMS
 
 --Shops--
 Config.PacificBank = {
-        name = "Central Pacific Bank", --Name of the shop
+        name = "Central Pacific Bank", --Name for bank
         blip = vector3(246.88, 219.49, 121.28),
         copsNeeded = 0, --Cops needed to start the robbery
 
         AlarmCoords = vector3(255.85, 222.02, 106.29), --The alarm coords.
-        AlarmState = nil, --Don't touch.
+        AlarmState = nil, 
 
         ResetBank = vector3(265.55, 220.34, 101.68),
 
-        mainReceptionEmployee = nil, --Don't touch.
+        mainReceptionEmployee = nil,
         mainReceptionEmployeeCoords = vector3(254.54, 222.38, 106.29), --Main Reception's employee coords.
         mainReceptionEmployeeHeading = 169.34, --Main Reception's employee Heading.
-        mainReceptionEmployeeState = nil, --Don't touch.
+        mainReceptionEmployeeState = nil, 
 
-        mainSecurityGuard = nil,--Don't touch.
-        mainSecurityGuardWeapon = nil,--Don't touch.
+        mainSecurityGuard = nil,
+        mainSecurityGuardWeapon = nil,
         mainSecurityGuardCoords = vector3(259.86, 216.68, 106.29), --Main Reception's employee coords.
         mainSecurityGuardHeading = 71.00, --Main Reception's employee Heading.
-        mainSecurityGuardState = nil, --Don't touch.
+        mainSecurityGuardState = nil,
 
-        secondSecurityGuard = nil,--Don't touch.
-        secondSecurityGuardWeapon = nil,--Don't touch.
+        secondSecurityGuard = nil,
+        secondSecurityGuardWeapon = nil,
         secondSecurityGuardCoords = vector3(238.84, 221.8, 106.29), --Main Reception's employee coords.
         secondSecurityGuardHeading = 252.29, --Main Reception's employee Heading.
-        secondSecurityGuardState = nil, --Don't touch.
+        secondSecurityGuardState = nil,
 
         randomPeds = {
             [1] = {
@@ -339,7 +336,7 @@ Config.PacificBank = {
 
         cooldown = {hour = 3, minute = 0, second = 0}, --Cooldown till the shop resets.
         camera = {1,2,3}, --Example: {1,2,3} for multiple cameras.
-        robbed = nil --Don't touch
+        robbed = nil
 }
 --Shops--
 
