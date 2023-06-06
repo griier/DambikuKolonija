@@ -158,7 +158,7 @@ coreFinished = false
 
 randomKeyGen = math.random(100000000,999999999)
 
-Citizen.CreateThread(function()
+Citizen.CreateThread(function() --creates thread for the main loop
 
             alarmState = false
 
@@ -240,7 +240,7 @@ Citizen.CreateThread(function()
 
 end)
 
-Citizen.CreateThread(function()
+Citizen.CreateThread(function() --creates thread for the main loop that checks if the bank is robbed
     while true do
 
         while not coreFinished do
@@ -254,9 +254,9 @@ Citizen.CreateThread(function()
 
 end)
 
-function CheckCops() --Parbauda cik policisti
+function CheckCops() --function that checks if there are enough cops online
     if(Config.UseCopJob)then
-        local cops = 0 --Uzliek policistus uz 0 lai parbauditu
+        local cops = 0 --puts the number of cops online to 0
         print("add police check here!!!")
 
         if(cops >= Config.PacificBank.copsNeeded)then --Parbauda
@@ -268,3 +268,16 @@ function CheckCops() --Parbauda cik policisti
         return true --Returns true if you don't need a cop job.
     end
 end
+
+--1.first it creates the thread for the main loop
+--2. then it creates the thread for the alarm
+--3. then it creates the thread for the main reception employee
+--4. then it creates the thread for the main security guard
+--5. then it creates the thread for the second security guard
+--6. then it creates the thread for the random peds
+--7. then it creates the thread for the doors
+--8. then it creates the thread for the safes
+--9. then it creates the thread for the lockers
+--10. then it creates the thread for the cash
+--11. then it creates the thread for the vault
+--12. then it creates function for checking if there are enough cops online

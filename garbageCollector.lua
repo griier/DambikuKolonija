@@ -1,4 +1,4 @@
---write explination for each line
+
 Citizen.CreateThread(function() -- Starts new thread
     while true do -- While loop
         Citizen.Wait(60000) -- Wait 60 seconds
