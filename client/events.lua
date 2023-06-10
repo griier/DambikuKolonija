@@ -56,8 +56,8 @@ end) --ends the robbed event
 RegisterNetEvent('pacificBankRobbery:client:stealableUpdate') -- starts the stealable update
 AddEventHandler('pacificBankRobbery:client:stealableUpdate', function(safes, lockers, cash) --adds the stealable update
     for v=1, #Config.PacificBank.safes do --config for the safes
-        Config.PacificBank.safes[v].opened = safes[v].opened --sets the safes to the safes
-        Config.PacificBank.safes[v].busy = safes[v].busy --sets the safes to the safes
+        Config.PacificBank.safes[v].opened = safes[v].opened --sets the safes to opened state
+        Config.PacificBank.safes[v].busy = safes[v].busy --sets the safes to busy state
     end
 
     for v=1, #Config.PacificBank.lockers do --
