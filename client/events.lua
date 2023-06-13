@@ -56,31 +56,31 @@ end) --ends the robbed event
 RegisterNetEvent('pacificBankRobbery:client:stealableUpdate') -- starts the stealable update
 AddEventHandler('pacificBankRobbery:client:stealableUpdate', function(safes, lockers, cash) --adds the stealable update
     for v=1, #Config.PacificBank.safes do --config for the safes
-        Config.PacificBank.safes[v].opened = safes[v].opened --sets the safes to opened state
-        Config.PacificBank.safes[v].busy = safes[v].busy --sets the safes to busy state
+        Config.PacificBank.safes[v].opened = safes[v].opened --sets the safes to the safes
+        Config.PacificBank.safes[v].busy = safes[v].busy --sets the safes to the safes
     end
 
-    for v=1, #Config.PacificBank.lockers do --
-        Config.PacificBank.lockers[v].opened = lockers[v].opened
-        Config.PacificBank.lockers[v].busy = lockers[v].busy
+    for v=1, #Config.PacificBank.lockers do -- sets the config for the lockers
+        Config.PacificBank.lockers[v].opened = lockers[v].opened --sets the lockers to the lockers
+        Config.PacificBank.lockers[v].busy = lockers[v].busy --sets the lockers to the lockers
     end
 
-    for v=1, #Config.PacificBank.cash do --
-        Config.PacificBank.cash[v].stolen = cash[v].stolen
-        Config.PacificBank.cash[v].busy = cash[v].busy
+    for v=1, #Config.PacificBank.cash do -- sets the config for the cash
+        Config.PacificBank.cash[v].stolen = cash[v].stolen --sets the cash to the cash
+        Config.PacificBank.cash[v].busy = cash[v].busy --sets the cash to the cash
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:locker_markers')
-AddEventHandler('pacificBankRobbery:client:locker_markers', function()
+RegisterNetEvent('pacificBankRobbery:client:locker_markers') --starts the locker markers
+AddEventHandler('pacificBankRobbery:client:locker_markers', function() --adds the locker markers
     while inPoly do
 
-        local inRange = false
+        local inRange = false --sets the in range to false
 
-        for i = 1, #Config.PacificBank.lockers do
-            if(#(globalPlayerCoords - Config.PacificBank.lockers[i].lockerCoords) <= 5.0)then
+        for i = 1, #Config.PacificBank.lockers do --for loop for the lockers
+            if(#(globalPlayerCoords - Config.PacificBank.lockers[i].lockerCoords) <= 5.0)then --if the player coords are less than or equal to 5
                 inRange = true
-                if not Config.PacificBank.lockers[i].busy and not Config.PacificBank.lockers[i].opened then
+                if not Config.PacificBank.lockers[i].busy and not Config.PacificBank.lockers[i].opened then --if the lockers are not busy and not opened
                     DrawMarker(2, Config.PacificBank.lockers[i].lockerCoords.x, Config.PacificBank.lockers[i].lockerCoords.y, Config.PacificBank.lockers[i].lockerCoords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, 1, false, false, false)
                 end
             end
@@ -94,9 +94,9 @@ AddEventHandler('pacificBankRobbery:client:locker_markers', function()
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:busyState')
-AddEventHandler('pacificBankRobbery:client:busyState', function(type, id, state)
-    if(type == "safe")then
+RegisterNetEvent('pacificBankRobbery:client:busyState') --starts the busy state
+AddEventHandler('pacificBankRobbery:client:busyState', function(type, id, state) --adds the busy state
+    if(type == "safe")then 
         Config.PacificBank.safes[id].busy = state
     elseif(type == "locker")then
         Config.PacificBank.lockers[id].busy = state
@@ -105,8 +105,8 @@ AddEventHandler('pacificBankRobbery:client:busyState', function(type, id, state)
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:stealableOpen')
-AddEventHandler('pacificBankRobbery:client:stealableOpen', function(type, id)
+RegisterNetEvent('pacificBankRobbery:client:stealableOpen') --starts the stealable open
+AddEventHandler('pacificBankRobbery:client:stealableOpen', function(type, id) --adds the stealable open
     if(type == "safe")then
         Config.PacificBank.safes[id].opened = true
     elseif(type == "locker")then
@@ -116,8 +116,8 @@ AddEventHandler('pacificBankRobbery:client:stealableOpen', function(type, id)
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:vault')
-AddEventHandler('pacificBankRobbery:client:vault', function()
+RegisterNetEvent('pacificBankRobbery:client:vault') --starts the vault
+AddEventHandler('pacificBankRobbery:client:vault', function() --adds the vault
     vault = GetClosestObjectOfType(Config.PacificBank.vaultDoor.vaultCoords.x, Config.PacificBank.vaultDoor.vaultCoords.y, Config.PacificBank.vaultDoor.vaultCoords.z, 20.0, Config.PacificBank.vaultDoor.vaultObject, false, false, false)
     local vaultHeading = Config.PacificBank.vaultDoor.vaultHeading.closed
 
@@ -705,7 +705,7 @@ AddEventHandler('pacificBankRobbery:client:startRobbery', function()
 
                     distance = #(globalPlayerCoords - pedCoords)    
 
-                    if(distance < 8.0)then
+                    if(distance < 2.0)then --distance betweeen the person and the receptionist
                         DrawText3D(pedCoords.x, pedCoords.y, pedCoords.z, "What do you want?")
 
                         if IsControlJustPressed(1, Config.SendReceptionToUnlockButton) then
@@ -846,3 +846,14 @@ AddEventHandler('pacificBankRobbery:client:teleport', function()
     end
     
 end)
+
+--1.firstly it starts all the animations and stuff
+--2, then it starts the timer
+--3. then it starts the hacking
+--4. then it starts the drilling
+--5. then it starts the thermite
+--6. then it starts the explosives
+--7. then it starts the gold
+--8. then it starts the money
+--9. then it starts the deposit boxes
+--10. then it starts the vault
