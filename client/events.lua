@@ -1,4 +1,3 @@
---write explanation here for what this file does
 RegisterNetEvent('pacificBankRobbery:client:randomKeyGen') --starts the random key generation
 AddEventHandler('pacificBankRobbery:client:randomKeyGen', function(key) --adds the random key generation
     serverKeyGen = key --sets the server key generation to the key
@@ -56,18 +55,18 @@ end) --ends the robbed event
 RegisterNetEvent('pacificBankRobbery:client:stealableUpdate') -- starts the stealable update
 AddEventHandler('pacificBankRobbery:client:stealableUpdate', function(safes, lockers, cash) --adds the stealable update
     for v=1, #Config.PacificBank.safes do --config for the safes
-        Config.PacificBank.safes[v].opened = safes[v].opened --sets the safes to the safes
-        Config.PacificBank.safes[v].busy = safes[v].busy --sets the safes to the safes
+        Config.PacificBank.safes[v].opened = safes[v].opened --sets the safes to opened state
+        Config.PacificBank.safes[v].busy = safes[v].busy --sets the safes to busy state
     end
 
-    for v=1, #Config.PacificBank.lockers do -- sets the config for the lockers
-        Config.PacificBank.lockers[v].opened = lockers[v].opened --sets the lockers to the lockers
-        Config.PacificBank.lockers[v].busy = lockers[v].busy --sets the lockers to the lockers
+    for v=1, #Config.PacificBank.lockers do
+        Config.PacificBank.lockers[v].opened = lockers[v].opened 
+        Config.PacificBank.lockers[v].busy = lockers[v].busy
     end
 
-    for v=1, #Config.PacificBank.cash do -- sets the config for the cash
-        Config.PacificBank.cash[v].stolen = cash[v].stolen --sets the cash to the cash
-        Config.PacificBank.cash[v].busy = cash[v].busy --sets the cash to the cash
+    for v=1, #Config.PacificBank.cash do --
+        Config.PacificBank.cash[v].stolen = cash[v].stolen
+        Config.PacificBank.cash[v].busy = cash[v].busy
     end
 end)
 
@@ -75,13 +74,13 @@ RegisterNetEvent('pacificBankRobbery:client:locker_markers') --starts the locker
 AddEventHandler('pacificBankRobbery:client:locker_markers', function() --adds the locker markers
     while inPoly do
 
-        local inRange = false --sets the in range to false
+        local inRange = false
 
         for i = 1, #Config.PacificBank.lockers do --for loop for the lockers
-            if(#(globalPlayerCoords - Config.PacificBank.lockers[i].lockerCoords) <= 5.0)then --if the player coords are less than or equal to 5
-                inRange = true
-                if not Config.PacificBank.lockers[i].busy and not Config.PacificBank.lockers[i].opened then --if the lockers are not busy and not opened
-                    DrawMarker(2, Config.PacificBank.lockers[i].lockerCoords.x, Config.PacificBank.lockers[i].lockerCoords.y, Config.PacificBank.lockers[i].lockerCoords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, 1, false, false, false)
+            if(#(globalPlayerCoords - Config.PacificBank.lockers[i].lockerCoords) <= 5.0)then --if the player is within 5 meters of the locker
+                inRange = true 
+                if not Config.PacificBank.lockers[i].busy and not Config.PacificBank.lockers[i].opened then 
+                    DrawMarker(2, Config.PacificBank.lockers[i].lockerCoords.x, Config.PacificBank.lockers[i].lockerCoords.y, Config.PacificBank.lockers[i].lockerCoords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, 1, false, false, false) 
                 end
             end
         end
@@ -95,20 +94,20 @@ AddEventHandler('pacificBankRobbery:client:locker_markers', function() --adds th
 end)
 
 RegisterNetEvent('pacificBankRobbery:client:busyState') --starts the busy state
-AddEventHandler('pacificBankRobbery:client:busyState', function(type, id, state) --adds the busy state
-    if(type == "safe")then 
-        Config.PacificBank.safes[id].busy = state
-    elseif(type == "locker")then
-        Config.PacificBank.lockers[id].busy = state
+AddEventHandler('pacificBankRobbery:client:busyState', function(type, id, state) --adds the busy state event handler
+    if(type == "safe")then
+        Config.PacificBank.safes[id].busy = state 
+    elseif(type == "locker")then 
+        Config.PacificBank.lockers[id].busy = state 
     elseif(type == "cash")then
         Config.PacificBank.cash[id].busy = state
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:stealableOpen') --starts the stealable open
-AddEventHandler('pacificBankRobbery:client:stealableOpen', function(type, id) --adds the stealable open
-    if(type == "safe")then
-        Config.PacificBank.safes[id].opened = true
+RegisterNetEvent('pacificBankRobbery:client:stealableOpen') --starts the stealable open event
+AddEventHandler('pacificBankRobbery:client:stealableOpen', function(type, id) --adds the stealable open event handler
+    if(type == "safe")then  
+        Config.PacificBank.safes[id].opened = true  
     elseif(type == "locker")then
         Config.PacificBank.lockers[id].opened = true
     elseif(type == "cash")then
@@ -116,12 +115,12 @@ AddEventHandler('pacificBankRobbery:client:stealableOpen', function(type, id) --
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:vault') --starts the vault
-AddEventHandler('pacificBankRobbery:client:vault', function() --adds the vault
+RegisterNetEvent('pacificBankRobbery:client:vault') --starts the vault event
+AddEventHandler('pacificBankRobbery:client:vault', function()
     vault = GetClosestObjectOfType(Config.PacificBank.vaultDoor.vaultCoords.x, Config.PacificBank.vaultDoor.vaultCoords.y, Config.PacificBank.vaultDoor.vaultCoords.z, 20.0, Config.PacificBank.vaultDoor.vaultObject, false, false, false)
     local vaultHeading = Config.PacificBank.vaultDoor.vaultHeading.closed
 
-    if(vault ~= 0)then
+    if(vault ~= 0)then 
         FreezeEntityPosition(vault, true)
         if(Config.PacificBank.vaultDoor.bombed or Config.PacificBank.vaultDoor.hacked)then
             if(Config.PacificBank.vaultDoor.bombed)then
@@ -146,8 +145,8 @@ AddEventHandler('pacificBankRobbery:client:vault', function() --adds the vault
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:pedHandler')
-AddEventHandler('pacificBankRobbery:client:pedHandler', function()
+RegisterNetEvent('pacificBankRobbery:client:pedHandler') --starts the ped handler
+AddEventHandler('pacificBankRobbery:client:pedHandler', function() --adds the ped handler
         while true do
             Citizen.Wait(100)
                 if(inPoly)then
@@ -202,7 +201,7 @@ AddEventHandler('pacificBankRobbery:client:pedHandler', function()
                     end
                 else
                     if(DoesEntityExist(SecondSecurityPed))then
-                        DeletePed(ReceptionPed)
+                        DeletePed(ReceptionPed) 
                         DeletePed(SecurityPed)
                         DeletePed(SecondSecurityPed)
                         for i = 1, #Config.PacificBank.randomPeds do
@@ -215,10 +214,10 @@ AddEventHandler('pacificBankRobbery:client:pedHandler', function()
         end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:randomPedAnim') --sāk animāciju priekš random ped
+RegisterNetEvent('pacificBankRobbery:client:randomPedAnim') --starts the random ped animation
 AddEventHandler('pacificBankRobbery:client:randomPedAnim', function(pedNumber)
     Citizen.Wait(500)
-    local animtype = Config.RandomAnimations[Config.PacificBank.randomPeds[pedNumber].animation].type --Iegūst informāciju par animāciju random PED, kas ir identificēts ar parametru 'pedNumber', no tabulas 'Config.RandomAnimations'.
+    local animtype = Config.RandomAnimations[Config.PacificBank.randomPeds[pedNumber].animation].type 
     local prop = nil
     local model = nil
     local dict = nil
@@ -322,7 +321,7 @@ AddEventHandler('pacificBankRobbery:client:randomPedAnim', function(pedNumber)
 
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:pedDead')
+RegisterNetEvent('pacificBankRobbery:client:pedDead') --starts the ped dead event
 AddEventHandler('pacificBankRobbery:client:pedDead', function(type, number)
 
     if(type == "reception")then
@@ -349,7 +348,7 @@ AddEventHandler('pacificBankRobbery:client:pedDead', function(type, number)
 
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:doorsUpdate') --To izmanto servera puses aizsardzībai, lai spēlētāji nevarētu uzreiz velreiz apzagt
+RegisterNetEvent('pacificBankRobbery:client:doorsUpdate') --starts the doors update event
 AddEventHandler('pacificBankRobbery:client:doorsUpdate', function(doors, vault)
     for i = 1, #Config.PacificBank.doors do
         Config.PacificBank.doors[i].locked = doors[i].locked
@@ -360,7 +359,7 @@ AddEventHandler('pacificBankRobbery:client:doorsUpdate', function(doors, vault)
     Config.PacificBank.vaultDoor.hacked = vault.hacked
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:toggleDoorLock') --To izmanto servera puses aizsardzībai, lai spēlētāji nevarētu uzreiz velreiz apzagt
+RegisterNetEvent('pacificBankRobbery:client:toggleDoorLock') --starts the toggle door lock event
 AddEventHandler('pacificBankRobbery:client:toggleDoorLock', function(id, state)
     Config.PacificBank.doors[id].locked = state
     local closestDoor = GetClosestObjectOfType(Config.PacificBank.doors[id].objCoords.x, Config.PacificBank.doors[id].objCoords.y, Config.PacificBank.doors[id].objCoords.z, 1.0, Config.PacificBank.doors[id].objName, false, false, false)
@@ -377,7 +376,7 @@ AddEventHandler('pacificBankRobbery:client:toggleDoorLock', function(id, state)
 
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:breakDoor') --To izmanto servera puses aizsardzībai, lai spēlētāji nevarētu uzreiz velreiz apzagt
+RegisterNetEvent('pacificBankRobbery:client:breakDoor') --starts the break door event
 AddEventHandler('pacificBankRobbery:client:breakDoor', function(id, state)
     Config.PacificBank.doors[id].destroyed = state
 
@@ -395,13 +394,13 @@ AddEventHandler('pacificBankRobbery:client:breakDoor', function(id, state)
 
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:damagedPeds')
+RegisterNetEvent('pacificBankRobbery:client:damagedPeds') --starts the damaged peds event
 AddEventHandler('pacificBankRobbery:client:damagedPeds', function()
     while inPoly and not Config.PacificBank.robbed do
         if(DoesEntityExist(ReceptionPed))then
             Citizen.Wait(100)
 
-            for i=1, #RandomPeds do
+            for i=1, #RandomPeds do 
                 if(GetEntityMaxHealth(RandomPeds[i]) > GetEntityHealth(RandomPeds[i]))then
                     damagedPed = true
                 end
@@ -416,7 +415,7 @@ AddEventHandler('pacificBankRobbery:client:damagedPeds', function()
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:thermiteEffect') --To izmanto servera puses aizsardzībai, lai spēlētāji nevarētu uzreiz velreiz apzagt
+RegisterNetEvent('pacificBankRobbery:client:thermiteEffect') --starts the thermite effect event
 AddEventHandler('pacificBankRobbery:client:thermiteEffect', function(id)
     Citizen.CreateThread(function()
         if inPoly then
@@ -471,7 +470,7 @@ AddEventHandler('pacificBankRobbery:client:thermiteEffect', function(id)
     end)
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:fightBack') --Izmanto priekš cīņas, kad sākas apzagšana Bankā
+RegisterNetEvent('pacificBankRobbery:client:fightBack') --starts the fight back event
 AddEventHandler('pacificBankRobbery:client:fightBack', function(targeter)
 
     target = GetPlayerPed(GetPlayerFromServerId(targeter))
@@ -497,7 +496,7 @@ AddEventHandler('pacificBankRobbery:client:fightBack', function(targeter)
         end
     end)
 
-    Citizen.CreateThread(function()
+    Citizen.CreateThread(function() 
         if(DoesEntityExist(SecondSecurityPed) and DoesEntityExist(target))then
             
             SetFacialIdleAnimOverride(SecondSecurityPed, "mood_angry_1")
@@ -519,7 +518,7 @@ AddEventHandler('pacificBankRobbery:client:fightBack', function(targeter)
     end)
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:pedsRun') --Izmanto priekš cīņas, kad sākas apzagšana Bankā
+RegisterNetEvent('pacificBankRobbery:client:pedsRun') --starts the peds run event
 AddEventHandler('pacificBankRobbery:client:pedsRun', function(pedRun)
 
     for i = 1, #Config.PacificBank.randomPeds do
@@ -533,7 +532,6 @@ AddEventHandler('pacificBankRobbery:client:pedsRun', function(pedRun)
                     PlayPain(RandomPeds[i], 7, 0, 0)
                     SetFacialIdleAnimOverride(RandomPeds[i], "shocked_1")
 
-                    --Aiziet līdz pirmajām durvīm
                     TaskGoStraightToCoord(RandomPeds[i], 262.84, 213.09, 106.28, 15.0, -1, 0.0, 0.0)
                     
                     local place = vector3(262.84, 213.09, 106.28)
@@ -542,7 +540,6 @@ AddEventHandler('pacificBankRobbery:client:pedsRun', function(pedRun)
                         Citizen.Wait(300)
                     end
 
-                    --Aiziet līdz otrajām durvīm
                     TaskGoStraightToCoord(RandomPeds[i], 257.97, 199.29, 104.98, 15.0, -1, 0.0, 0.0)
                     
                     local place = vector3(257.97, 199.29, 104.98)
@@ -551,7 +548,6 @@ AddEventHandler('pacificBankRobbery:client:pedsRun', function(pedRun)
                         Citizen.Wait(300)
                     end
 
-                    --Aiziet līdz noteiktajai lokācijai
                     TaskGoStraightToCoord(RandomPeds[i], 362.29 + math.random(-20, 20), 67.67 + math.random(-20, 20),97.90, 15.0, -1, 0.0, 0.0)
                     Citizen.Wait(15000)
                     DeletePed(RandomPeds[i])
@@ -559,7 +555,6 @@ AddEventHandler('pacificBankRobbery:client:pedsRun', function(pedRun)
                     PlayPain(RandomPeds[i], 6, 0, 0)
                     SetFacialIdleAnimOverride(RandomPeds[i], "shocked_1")
 
-                    --Pirmā kordināte
                     TaskGoStraightToCoord(RandomPeds[i], 243.45, 214.99, 106.29, 15.0, -1, 0.0, 0.0)
                     
                     local place = vector3(243.45, 214.99, 106.29)
@@ -568,7 +563,6 @@ AddEventHandler('pacificBankRobbery:client:pedsRun', function(pedRun)
                         Citizen.Wait(300)
                     end
 
-                    --otrā kordināte
                     TaskGoStraightToCoord(RandomPeds[i], 241.91, 212.16, 106.29, 15.0, -1, 0.0, 0.0)
                     
                     local place = vector3(241.91, 212.16, 106.29)
@@ -577,7 +571,6 @@ AddEventHandler('pacificBankRobbery:client:pedsRun', function(pedRun)
                         Citizen.Wait(300)
                     end
 
-                    --Durvju kordināte
                     TaskGoStraightToCoord(RandomPeds[i], 233.79, 216.11, 106.29, 15.0, -1, 0.0, 0.0)
                     
                     local place = vector3(233.79, 216.11, 106.29)
@@ -595,24 +588,24 @@ AddEventHandler('pacificBankRobbery:client:pedsRun', function(pedRun)
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:robbedToggler') --Izmanto priekš cīņas, kad sākas apzagšana Bankā
+RegisterNetEvent('pacificBankRobbery:client:robbedToggler') --starts the robbed toggler event
 AddEventHandler('pacificBankRobbery:client:robbedToggler', function(robbed)
     Config.PacificBank.robbed = robbed
     Config.PacificBank.AlarmState = robbed
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:AlarmState') --Izmanto priekš cīņas, kad sākas apzagšana Bankā
+RegisterNetEvent('pacificBankRobbery:client:AlarmState') --starts the alarm state event
 AddEventHandler('pacificBankRobbery:client:AlarmState', function(state)
     Config.PacificBank.AlarmState = state
 
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:policeCheck') --Izmanto priekš cīņas, kad sākas apzagšana Bankā
+RegisterNetEvent('pacificBankRobbery:client:policeCheck') --starts the police check event
 AddEventHandler('pacificBankRobbery:client:policeCheck', function(state)
     policeCheck = state
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:vaultOpener')
+RegisterNetEvent('pacificBankRobbery:client:vaultOpener') --starts the vault opener event
 AddEventHandler('pacificBankRobbery:client:vaultOpener', function(type)
 
     if(type == "bomb")then
@@ -662,14 +655,14 @@ AddEventHandler('pacificBankRobbery:client:vaultOpener', function(type)
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:cashModel')
+RegisterNetEvent('pacificBankRobbery:client:cashModel') --starts the cash model event
 AddEventHandler('pacificBankRobbery:client:cashModel', function(i)
     if inPoly then
         cash[i] = CreateModelSwap(Config.PacificBank.cash[i].cashCoords.x, Config.PacificBank.cash[i].cashCoords.y, Config.PacificBank.cash[i].cashCoords.z, 5, `hei_prop_hei_cash_trolly_01`, `prop_gold_trolly`, 1)
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:startRobbery') --Izmanto priekš cīņas, kad sākas apzagšana Bankā
+RegisterNetEvent('pacificBankRobbery:client:startRobbery') --starts the robbery event
 AddEventHandler('pacificBankRobbery:client:startRobbery', function()
     
     if(not Config.PacificBank.robbed)then
@@ -705,7 +698,7 @@ AddEventHandler('pacificBankRobbery:client:startRobbery', function()
 
                     distance = #(globalPlayerCoords - pedCoords)    
 
-                    if(distance < 2.0)then --distance betweeen the person and the receptionist
+                    if(distance < 8.0)then
                         DrawText3D(pedCoords.x, pedCoords.y, pedCoords.z, "What do you want?")
 
                         if IsControlJustPressed(1, Config.SendReceptionToUnlockButton) then
@@ -734,7 +727,7 @@ AddEventHandler('pacificBankRobbery:client:startRobbery', function()
                                     if(not (Config.Reception[Config.PacificBank.mainReceptionEmployee].disableCamerasFakeChance > math.random(1,100)))then
                                         if(not IsPedDeadOrDying(ReceptionPed))then
                                             for k, v in pairs(Config.PacificBank.camera) do
-                                                TriggerServerEvent("cameraSystem:server:updateState", v, false)
+                                                TriggerServerEvent("cameraSystem:server:updateState", v, false) 
                                             end
                                         end
                                     end
@@ -760,9 +753,9 @@ AddEventHandler('pacificBankRobbery:client:startRobbery', function()
 end)
 
 
-RegisterNetEvent('pacificBankRobbery:client:receptionUnlock') --Izmanto priekš cīņas, kad sākas apzagšana Bankā
-AddEventHandler('pacificBankRobbery:client:receptionUnlock', function()
-    if inPoly and DoesEntityExist(ReceptionPed) then
+RegisterNetEvent('pacificBankRobbery:client:receptionUnlock') --starts the reception unlock event
+AddEventHandler('pacificBankRobbery:client:receptionUnlock', function() --adds reception unlock event handler
+    if inPoly and DoesEntityExist(ReceptionPed) then --
         TaskGoStraightToCoord(ReceptionPed, 256.96, 224.44, 106.29, 1.0, -1, 0.0, 0.0)
 
         local place = vector3(256.96, 224.44, 106.29)
@@ -804,7 +797,6 @@ AddEventHandler('pacificBankRobbery:client:receptionUnlock', function()
         PlayPain(ReceptionPed, 7, 0, 0)
         SetFacialIdleAnimOverride(ReceptionPed, "shocked_1")
 
-        --Go to first door
         TaskGoStraightToCoord(ReceptionPed, 262.84, 213.09, 106.28, 15.0, -1, 0.0, 0.0)
         
         local place = vector3(262.84, 213.09, 106.28)
@@ -813,7 +805,6 @@ AddEventHandler('pacificBankRobbery:client:receptionUnlock', function()
             Citizen.Wait(300)
         end
 
-        --Go to second door
         TaskGoStraightToCoord(ReceptionPed, 257.97, 199.29, 104.98, 15.0, -1, 0.0, 0.0)
         
         local place = vector3(257.97, 199.29, 104.98)
@@ -824,8 +815,8 @@ AddEventHandler('pacificBankRobbery:client:receptionUnlock', function()
     end
 end)
 
-RegisterNetEvent('pacificBankRobbery:client:teleport')
-AddEventHandler('pacificBankRobbery:client:teleport', function()
+RegisterNetEvent('pacificBankRobbery:client:teleport') --starts the teleport event
+AddEventHandler('pacificBankRobbery:client:teleport', function() --adds teleport event handler
     
     if(inPoly)then
         DoScreenFadeOut(1000)
@@ -847,13 +838,3 @@ AddEventHandler('pacificBankRobbery:client:teleport', function()
     
 end)
 
---1.firstly it starts all the animations and stuff
---2, then it starts the timer
---3. then it starts the hacking
---4. then it starts the drilling
---5. then it starts the thermite
---6. then it starts the explosives
---7. then it starts the gold
---8. then it starts the money
---9. then it starts the deposit boxes
---10. then it starts the vault
