@@ -1,77 +1,78 @@
-RegisterServerEvent('pacificBankRobbery:server:randomKeyGen') --Izmantots lai apstādinātu itemu un naudas uzspawnošanu
-AddEventHandler('pacificBankRobbery:server:randomKeyGen', function(source)
-    TriggerClientEvent('pacificBankRobbery:client:randomKeyGen', source, randomKeyGen)
+
+RegisterServerEvent('pacificBankRobbery:server:randomKeyGen') -- Starts the randomkey generation
+AddEventHandler('pacificBankRobbery:server:randomKeyGen', function(source) -- add randomkey generation event handler
+    TriggerClientEvent('pacificBankRobbery:client:randomKeyGen', source, randomKeyGen) -- trigger the client event
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:AlarmState') --Izmantot lai apstādinātu itemu un naudas uzspawnošanu
-AddEventHandler('pacificBankRobbery:server:AlarmState', function(source)
+RegisterServerEvent('pacificBankRobbery:server:AlarmState') -- Starts the alarm state
+AddEventHandler('pacificBankRobbery:server:AlarmState', function(source) --add alarm state event handler
     TriggerClientEvent('pacificBankRobbery:client:AlarmState', source, alarmState)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:policeCheck') --Izmantot lai apstādinātu itemu un naudas uzspawnošanu
-AddEventHandler('pacificBankRobbery:server:policeCheck', function(source)
+RegisterServerEvent('pacificBankRobbery:server:policeCheck') -- Starts the police check
+AddEventHandler('pacificBankRobbery:server:policeCheck', function(source) -- add police check event handler
     TriggerClientEvent('pacificBankRobbery:client:policeCheck', source, policeCheck)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:globalAlarmState') --Izmantot lai apstādinātu itemu un naudas uzspawnošanu
-AddEventHandler('pacificBankRobbery:server:globalAlarmState', function(source)
+RegisterServerEvent('pacificBankRobbery:server:globalAlarmState') -- Starts the global alarm state
+AddEventHandler('pacificBankRobbery:server:globalAlarmState', function(source) -- add global alarm state event handler
     alarmState = false
-    TriggerClientEvent('pacificBankRobbery:client:AlarmState', -1, alarmState)
+    TriggerClientEvent('pacificBankRobbery:client:AlarmState', -1, alarmState) 
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:PedsUpdate')--Izmantot lai apstādinātu itemu un naudas uzspawnošanu
+RegisterServerEvent('pacificBankRobbery:server:PedsUpdate') -- this is to make sure the peds are loaded before the event is triggered
 AddEventHandler('pacificBankRobbery:server:PedsUpdate', function(source)
-    while checker do
+    while checker do 
         checker = false
-        if(mainReceptionEmployee == nil)then
-            checker = true
+        if(mainReceptionEmployee == nil)then 
+            checker = true 
         end
         Citizen.Wait(100)
     end
 
     TriggerClientEvent('pacificBankRobbery:client:PedsUpdate', source, mainReceptionEmployee, mainSecurityGuardWeapon, mainReceptionEmployeeState, mainSecurityGuard, mainSecurityGuardState, secondSecurityGuardWeapon, secondSecurityGuard, secondSecurityGuardState,  randomPeds)
-end)
+end) 
 
-RegisterServerEvent('pacificBankRobbery:server:robbed')
+RegisterServerEvent('pacificBankRobbery:server:robbed') -- Starts the robbed event
 AddEventHandler('pacificBankRobbery:server:robbed', function(source)
     TriggerClientEvent('pacificBankRobbery:client:robbedToggler', source, robbed)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:animator')
+RegisterServerEvent('pacificBankRobbery:server:animator') -- Starts the animator event
 AddEventHandler('pacificBankRobbery:server:animator', function(type, dict, anim, speech)
     TriggerClientEvent('pacificBankRobbery:client:animator', -1, type, dict, anim, speech)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:stealableUpdate')
+RegisterServerEvent('pacificBankRobbery:server:stealableUpdate') -- Starts the stealable update event
 AddEventHandler('pacificBankRobbery:server:stealableUpdate', function(source)
     TriggerClientEvent('pacificBankRobbery:client:stealableUpdate', source, safes, lockers, cash)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:doorsUpdate')
+RegisterServerEvent('pacificBankRobbery:server:doorsUpdate') -- Starts the doors update event
 AddEventHandler('pacificBankRobbery:server:doorsUpdate', function(source)
     TriggerClientEvent('pacificBankRobbery:client:doorsUpdate', source, doors, vault)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:receptionUnlock')
+RegisterServerEvent('pacificBankRobbery:server:receptionUnlock') -- Starts the reception unlock event
 AddEventHandler('pacificBankRobbery:server:receptionUnlock', function(source)
     TriggerClientEvent('pacificBankRobbery:client:receptionUnlock', -1)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:vaultOpener') 
+RegisterServerEvent('pacificBankRobbery:server:vaultOpener') -- Starts the vault opener event
 AddEventHandler('pacificBankRobbery:server:vaultOpener', function(type)
-    if(type == "bomb")then
-        vault.bombed = true
+    if(type == "bomb")then -- if the type is bomb then set the vault to bombed and trigger the client event
+        vault.bombed = true 
         TriggerClientEvent("pacificBankRobbery:client:vaultOpener", -1, type)
-    elseif(type == "hack")then
+    elseif(type == "hack")then -- if the type is hack then set the vault to hacked and trigger the client event
         vault.hacked = true
         TriggerClientEvent("pacificBankRobbery:client:vaultOpener", -1, type)
     end
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:toggleDoorLock')
+RegisterServerEvent('pacificBankRobbery:server:toggleDoorLock') -- Starts the toggle door lock event
 AddEventHandler('pacificBankRobbery:server:toggleDoorLock', function(id, statino)
 
-    if(statino ~= nil)then
+    if(statino ~= nil)then 
         doors[id].locked = statino
     else
         doors[id].locked = not doors[id].locked
@@ -80,18 +81,18 @@ AddEventHandler('pacificBankRobbery:server:toggleDoorLock', function(id, statino
     TriggerClientEvent('pacificBankRobbery:client:toggleDoorLock', -1, id, doors[id].locked)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:breakDoor')
+RegisterServerEvent('pacificBankRobbery:server:breakDoor') -- Starts the break door event
 AddEventHandler('pacificBankRobbery:server:breakDoor', function(id)
     doors[id].destroyed = true
     TriggerClientEvent('pacificBankRobbery:client:breakDoor', -1, id, doors[id].destroyed)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:thermiteEffect')
+RegisterServerEvent('pacificBankRobbery:server:thermiteEffect') -- Starts the thermite effect event
 AddEventHandler('pacificBankRobbery:server:thermiteEffect', function(id)
     TriggerClientEvent('pacificBankRobbery:client:thermiteEffect', -1, id)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:busyState') 
+RegisterServerEvent('pacificBankRobbery:server:busyState') -- Starts the busy state event
 AddEventHandler('pacificBankRobbery:server:busyState', function(type, id, state)
     if(type == "safe")then
         safes[id].busy = state
@@ -105,7 +106,7 @@ AddEventHandler('pacificBankRobbery:server:busyState', function(type, id, state)
     end
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:stealableOpen')
+RegisterServerEvent('pacificBankRobbery:server:stealableOpen') -- Starts the stealable open event
 AddEventHandler('pacificBankRobbery:server:stealableOpen', function(source, type, id, password)
     if(password ~= nil)then
         if(password == randomKeyGen)then
@@ -117,7 +118,7 @@ AddEventHandler('pacificBankRobbery:server:stealableOpen', function(source, type
                     safes[id].opened = true
                     randomAmount = math.random(Config.PacificBank.safes[id].safeMoney[1], Config.PacificBank.safes[id].safeMoney[2])
                     TriggerClientEvent("pacificBankRobbery:client:stealableOpen", -1, type, id)
-                    print("Yes this is Server Event So You Get Fucked You peace of shit!")
+                    print("Yes this is Server Event!")
                 else
                     DropPlayer(source, 'Pacific: Abusing Safe')
                     randomAmount = 0  
@@ -129,7 +130,7 @@ AddEventHandler('pacificBankRobbery:server:stealableOpen', function(source, type
                     lockers[id].opened = true
                     randomAmount = math.random(Config.PacificBank.lockers[id].lockerMoney[1], Config.PacificBank.lockers[id].lockerMoney[2])
                     TriggerClientEvent("pacificBankRobbery:client:stealableOpen", -1, type, id)
-                    print("Yes this is Server Event So You Get Fucked You peace of shit!")
+                    print("Yes this is Server Event!")
                 else
                     DropPlayer(source, 'Pacific: Abusing Lockers')
                     randomAmount = 0  
@@ -160,7 +161,7 @@ AddEventHandler('pacificBankRobbery:server:stealableOpen', function(source, type
 
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:robbedToggler')
+RegisterServerEvent('pacificBankRobbery:server:robbedToggler') -- Starts the robbed toggler event
 AddEventHandler('pacificBankRobbery:server:robbedToggler', function()
 
     robbed = true
@@ -189,7 +190,7 @@ AddEventHandler('pacificBankRobbery:server:pedDead', function(type, number)
     local wait = cooldown.hour * hour + cooldown.minute * minute + cooldown.second * second
 
     if(type == "reception")then
-        if(mainReceptionEmployeeState)then
+        if(mainReceptionEmployeeState)then -- if the mainReceptionEmployeeState is true then set it to false and wait for the cooldown to end
             mainReceptionEmployeeState = false
             Citizen.CreateThread(function()
                 Wait(wait)
@@ -202,7 +203,7 @@ AddEventHandler('pacificBankRobbery:server:pedDead', function(type, number)
                     TriggerClientEvent('pacificBankRobbery:client:reset', -1)
             end)
         end
-    elseif(type == "guard")then
+    elseif(type == "guard")then -- if the mainSecurityGuardState is true then set it to false and wait for the cooldown to end
         if(mainSecurityGuardState)then
             mainSecurityGuardState = false
             Citizen.CreateThread(function()
@@ -216,7 +217,7 @@ AddEventHandler('pacificBankRobbery:server:pedDead', function(type, number)
                     TriggerClientEvent('pacificBankRobbery:client:reset', -1)
             end)
         end
-    elseif(type == "guard2")then
+    elseif(type == "guard2")then -- if the secondSecurityGuardState is true then set it to false and wait for the cooldown to end
         if(secondSecurityGuardState)then
             secondSecurityGuardState = false
             Citizen.CreateThread(function()
@@ -230,7 +231,7 @@ AddEventHandler('pacificBankRobbery:server:pedDead', function(type, number)
                     TriggerClientEvent('pacificBankRobbery:client:reset', -1)
             end)
         end
-    elseif(type == "randomPeds")then
+    elseif(type == "randomPeds")then -- if the randomPeds[number].state is true then set it to false and wait for the cooldown to end
         if(randomPeds[number].state)then
             randomPeds[number].state = false
             Citizen.CreateThread(function()
@@ -249,14 +250,13 @@ AddEventHandler('pacificBankRobbery:server:pedDead', function(type, number)
     TriggerClientEvent('pacificBankRobbery:client:pedDead', -1, type, number)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:fightBack') 
-AddEventHandler('pacificBankRobbery:server:fightBack', function(ped) --Izmantot priekš cīņas kad banka tiek apzagta
+RegisterServerEvent('pacificBankRobbery:server:fightBack') -- Starts the fight back event
+AddEventHandler('pacificBankRobbery:server:fightBack', function(ped)
     TriggerClientEvent('pacificBankRobbery:client:fightBack', -1, ped)
 end)
 
-RegisterServerEvent('pacificBankRobbery:server:pedsRun') 
-AddEventHandler('pacificBankRobbery:server:pedsRun', function(ped) --Izmantot priekš cīņas kad banka tiek apzagta.
-
+RegisterServerEvent('pacificBankRobbery:server:pedsRun') -- Starts the peds run event
+AddEventHandler('pacificBankRobbery:server:pedsRun', function(ped)
     local pedRun = {}
 
     for i = 1, #Config.PacificBank.randomPeds do
@@ -266,7 +266,7 @@ AddEventHandler('pacificBankRobbery:server:pedsRun', function(ped) --Izmantot pr
     TriggerClientEvent('pacificBankRobbery:client:pedsRun', -1, pedRun)
 end)
 
-RegisterNetEvent('pacificBankRobbery:server:ResetBank')
+RegisterNetEvent('pacificBankRobbery:server:ResetBank') -- Starts the reset bank event
 AddEventHandler('pacificBankRobbery:server:ResetBank', function()
     
     TriggerClientEvent("pacificBankRobbery:client:teleport", -1)
@@ -284,7 +284,7 @@ AddEventHandler('pacificBankRobbery:server:ResetBank', function()
     secondSecurityGuardWeapon = Config.SecurityPeds[secondSecurityGuard].Weapons[math.random(1, #Config.SecurityPeds[secondSecurityGuard].Weapons)]
     secondSecurityGuardState = true
 
-    for i = 1, #Config.PacificBank.randomPeds do
+    for i = 1, #Config.PacificBank.randomPeds do -- this is to make sure the random peds are loaded before the event is triggered
 
         local notfinished = true
 
@@ -362,7 +362,7 @@ AddEventHandler('pacificBankRobbery:server:ResetBank', function()
 
 end)
 
-RegisterNetEvent('pacificBankRobbery:server:removeItem')
+RegisterNetEvent('pacificBankRobbery:server:removeItem') -- Starts the remove item event
 AddEventHandler('pacificBankRobbery:server:removeItem', function(type, source, password)
     if(password ~= nil)then
         if(password == randomKeyGen)then
